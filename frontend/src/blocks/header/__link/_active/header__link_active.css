@@ -1,0 +1,9 @@
+.header__link_active {
+  display: flex;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: #A9A9A9;
+  text-decoration: none;
+}

@@ -1,0 +1,23 @@
+.authForm__input {
+  margin-top: 30px;
+  border: none;
+  border-bottom: 2px solid #CCC;
+  background-color: transparent;
+  width: 358px;
+  font-weight: 500;
+  line-height: 17px;
+  font-size: 14px;
+  color: #fff;
+  padding: 0;
+  padding-bottom: 9px;
+}
+  
+.authForm__input:focus {
+  outline: none;
+}
+
+.authForm__input::placeholder {
+  color: #ccc;
+  font-weight: 400;
+}
+

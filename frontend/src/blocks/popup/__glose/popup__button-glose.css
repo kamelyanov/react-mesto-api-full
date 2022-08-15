@@ -1,0 +1,27 @@
+.popup__button-glose {
+  background-image: url(../../../images/Close-icon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.popup__button-glose:hover {
+  opacity: 0.6;
+}
+
+@media (max-width: 540px) {
+  .popup__button-glose {
+    width: 20px;
+    height: 20px;
+    top: -36px;
+    right: 0px;
+  }
+}

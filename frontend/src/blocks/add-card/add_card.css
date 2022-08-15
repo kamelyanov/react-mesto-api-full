@@ -1,0 +1,18 @@
+.add-card {
+  font-family: Inter, Arial, sans-serif;
+  margin: 0;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 430px;
+  background-color: #fff;
+  border-radius: 10px;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 540px) {
+  .add-card {
+    width: 282px;
+  }
+}
