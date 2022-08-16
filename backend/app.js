@@ -7,8 +7,9 @@ const helmet = require('helmet');
 const router = require('./routes');
 const handleErrors = require('./errors/handleErrors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+require('dotenv').config();
 
-const { PORT = 3000, LOCALHOST = 'mongodb://localhost:27017/mestodb' } = process.env;
+const { PORT = 3000, NODE_ENV, LOCALHOST = 'mongodb://localhost:27017/mestodb' } = process.env;
 const app = express();
 
 const limiter = rateLimit({
@@ -18,23 +19,31 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-
 app.use(limiter);
 app.use(helmet());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(requestLogger);
 
-mongoose.connect(LOCALHOST, {
-  useNewUrlParser: true,
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
 });
 
-app.use(requestLogger);
 app.use(router);
 app.use(errorLogger);
 router.use(errors());
 app.use(handleErrors);
 
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-});
+async function main() {
+  await mongoose.connect((NODE_ENV === 'production' ? MONGODB_ADDRESS: LOCALHOST), {
+    useNewUrlParser: true,
+  });
+  app.listen(PORT, () => {
+    console.log(`App listening on port ${PORT}`);
+  });
+}
+
+main();
