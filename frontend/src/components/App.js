@@ -44,7 +44,7 @@ function App() {
       })
       .catch((err) => console.log(err));
     tokenCheck()
-    }  
+    }
   }, [loggedIn])
 
   function handleEditAvatarClick() {
@@ -91,8 +91,8 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
-
+    const isLiked = card.likes.some(i => i.id === currentUser._id);
+    
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c))
@@ -139,8 +139,8 @@ function App() {
 
   function handleRegistration(password, email) {
     auth.register(password, email)
-      .then((result) => {
-        setEmail(result.data.email)
+      .then((res) => {
+        setEmail(res.email)
         history.push('/sign-in')
         setMessage({ img: success, text: 'Вы успешно зарегистрировались!' })
       })
@@ -153,7 +153,7 @@ function App() {
       .then((token) => {
         auth.getCheckToken(token)
           .then((res) => {
-            setEmail(res.data.email)
+            setEmail(res.email)
             setLoggedIn(true)
             history.push('/')
           })
