@@ -28,7 +28,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(requestLogger);
 
 app.use(cors({
-  origin: ['https://mesto.kamelianov.nomoredomains.sbs',
+  origin: [
+    'https://mesto.kamelianov.nomoredomains.sbs',
+    'backend.mesto.nomoredomains.sbs',
     'http://localhost:3000/'],
   credentials: true,
 }));
