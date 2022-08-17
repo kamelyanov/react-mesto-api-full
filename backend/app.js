@@ -25,7 +25,7 @@ app.use(helmet());
 const allowedCors = [
   'https://mesto.kamelianov.nomoredomains.sbs',
   'http://mesto.kamelianov.nomoredomains.sbs',
-  'localhost:3000'
+  'http://localhost:3000/'
 ];
 
 app.use((req, res, next) => {
