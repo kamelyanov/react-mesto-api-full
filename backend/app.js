@@ -23,17 +23,16 @@ const limiter = rateLimit({
 app.use(limiter);
 app.use(helmet());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(requestLogger);
-
 app.use(cors({
   origin: [
     'https://mesto.kamelianov.nomoredomains.sbs',
-    'backend.mesto.nomoredomains.sbs',
-    'http://localhost:3000/'],
-  credentials: true,
+    'https://backend.mesto.nomoredomains.sbs',
+    'http://localhost:3000/']
 }));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(requestLogger);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
