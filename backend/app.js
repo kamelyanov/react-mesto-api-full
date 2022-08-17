@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const rateLimit = require('express-rate-limit');
@@ -25,6 +26,12 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(requestLogger);
+
+app.use(cors({
+  origin: ['https://mesto.kamelianov.nomoredomains.sbs',
+    'http://localhost:3000/'],
+  credentials: true,
+}));
 
 app.get('/crash-test', () => {
   setTimeout(() => {
