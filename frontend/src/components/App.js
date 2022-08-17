@@ -118,7 +118,7 @@ function App() {
   }
 
   useEffect(() => {
-    tokenCheck()  
+    tokenCheck() 
   }, [])
 
   function tokenCheck() {
@@ -128,7 +128,7 @@ function App() {
       auth.getCheckToken(jwt)
         .then((res) => {
           if (res) {
-            setEmail(res.data.email)
+            setEmail(res.email)
             setLoggedIn(true)
             history.push('/')
           }
