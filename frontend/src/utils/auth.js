@@ -43,4 +43,3 @@ export const getCheckToken = (token) => {
   .then(res => res)
   .catch(err => console.log(err))
 };
-

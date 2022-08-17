@@ -91,7 +91,7 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i.id === currentUser._id);
+    const isLiked = card.likes.some(id => id === currentUser._id);
     
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
@@ -144,7 +144,7 @@ function App() {
         history.push('/sign-in')
         setMessage({ img: success, text: 'Вы успешно зарегистрировались!' })
       })
-      .catch(() => setMessage({ img: unSuccess, text: 'Что-то пошло не так! Попробуйте ещё раз.' }))
+      .catch((res) => setMessage({ img: unSuccess, text: res.message }))
       .finally(() => setIsInfoTooltipOpen(true))
   }
 
@@ -157,8 +157,8 @@ function App() {
             setLoggedIn(true)
             history.push('/')
           })
-          .catch(() => {
-            setMessage({ img: unSuccess, text: 'Что-то пошло не так! Попробуйте ещё раз.' })
+          .catch((res) => {
+            setMessage({ img: unSuccess, text: res.message })
             setIsInfoTooltipOpen(true)
           })
       })
