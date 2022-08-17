@@ -26,7 +26,7 @@ app.use(helmet());
 app.use(cors({
   origin: [
     'https://mesto.kamelianov.nomoredomains.sbs',
-    'https://backend.mesto.nomoredomains.sbs/',
+    'http://mesto.kamelianov.nomoredomains.sbs',
     'http://localhost:3000/']
 }));
 
