@@ -28,22 +28,20 @@ function App() {
   const [selectCard, setSelectCard] = useState(null)
   const [cards, setCards] = useState([]);
   const [currentUser, setCurrentUser] = useState({})
-
   const [email, setEmail] = useState('')
   const [loggedIn, setLoggedIn] = useState(false)
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false)
-
   const [message, setMessage] = useState({ img: '', text: '' })
 
   useEffect(() => {
     if (loggedIn) {
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([user, cards]) => {
-        setCards(cards)
-        setCurrentUser(user)
-      })
-      .catch((err) => console.log(err));
-    tokenCheck()
+      Promise.all([api.getUserInfo(), api.getInitialCards()])
+        .then(([user, cards]) => {
+          setCards(cards)
+          setCurrentUser(user)
+        })
+        .catch((err) => console.log(err));
+      tokenCheck()
     }
   }, [loggedIn])
 
@@ -65,7 +63,7 @@ function App() {
     setIsAddPlacePopupOpen(false)
     setSelectCard(null)
     setIsInfoTooltipOpen(false)
-    setMessage({img: '', text: ''})
+    setMessage({ img: '', text: '' })
   }
 
   function onCardClick(card) {
@@ -92,7 +90,7 @@ function App() {
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(id => id === currentUser._id);
-    
+
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c))
@@ -118,7 +116,7 @@ function App() {
   }
 
   useEffect(() => {
-    tokenCheck() 
+    tokenCheck()
   }, [])
 
   function tokenCheck() {
@@ -128,8 +126,8 @@ function App() {
       auth.getCheckToken(jwt)
         .then((res) => {
           if (res) {
-            setEmail(res.email)
             setLoggedIn(true)
+            setEmail(res.email)
             history.push('/')
           }
         })
@@ -141,7 +139,7 @@ function App() {
     auth.register(password, email)
       .then((res) => {
         if (res.statusCode !== 201)
-        setEmail(res.email)
+          setEmail(res.email)
         history.push('/sign-in')
       })
       .then(() => setMessage({ img: success, text: 'Вы успешно зарегистрировались!' }))
@@ -157,8 +155,8 @@ function App() {
             setLoggedIn(true)
             setEmail(res.email)
             history.push('/')
-          })  
-        })
+          })
+      })
       .catch(() => {
         setMessage({ img: unSuccess, text: 'Что-то пошло не так! Попробуйте ещё раз.' })
         setIsInfoTooltipOpen(true)
