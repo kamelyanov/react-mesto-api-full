@@ -43,6 +43,5 @@ export const getCheckToken = (token) => {
     }
   })
   .then((response => response.json()))
-  .then(res => res)
   .catch(err => console.log('Ошибка на сервере: ' + err.status + ' - ' + err.statusText))
 };

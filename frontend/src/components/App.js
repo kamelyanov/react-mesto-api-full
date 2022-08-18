@@ -154,8 +154,8 @@ function App() {
       .then((token) => {
         auth.getCheckToken(token)
           .then((res) => {
-            setEmail(res.email)
             setLoggedIn(true)
+            setEmail(res.email)
             history.push('/')
           })
           .catch((res) => {
