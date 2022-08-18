@@ -8,9 +8,12 @@ export const register = (password, email) => {
     },
     body: JSON.stringify({password, email})
   })
-  .then(response => response.json())
-  .then(res => res)
-  .catch(err => console.log(err))
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return console.log('Ошибка на сервере: ' + res.status + ' - ' + res.statusText);
+  })
 }
 
 export const authorize = (password, email) => {
@@ -28,7 +31,7 @@ export const authorize = (password, email) => {
       return data.token;
     } 
   })
-  .catch(err => console.log(err))
+  .catch(err => console.log('Ошибка на сервере: ' + err.status + ' - ' + err.statusText))
 };
 
 export const getCheckToken = (token) => {
@@ -41,5 +44,5 @@ export const getCheckToken = (token) => {
   })
   .then((response => response.json()))
   .then(res => res)
-  .catch(err => console.log(err))
+  .catch(err => console.log('Ошибка на сервере: ' + err.status + ' - ' + err.statusText))
 };

@@ -140,11 +140,12 @@ function App() {
   function handleRegistration(password, email) {
     auth.register(password, email)
       .then((res) => {
+        if (res.statusCode !== 201)
         setEmail(res.email)
         history.push('/sign-in')
-        setMessage({ img: success, text: 'Вы успешно зарегистрировались!' })
       })
-      .catch((res) => setMessage({ img: unSuccess, text: res.message }))
+      .then((res) => setMessage({ img: success, text: 'Вы успешно зарегистрировались!' }))
+      .catch((res) => setMessage({ img: unSuccess, text: 'Что-то пошло не так! Попробуйте ещё раз.' }))
       .finally(() => setIsInfoTooltipOpen(true))
   }
 
