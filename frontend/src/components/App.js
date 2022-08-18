@@ -144,8 +144,8 @@ function App() {
         setEmail(res.email)
         history.push('/sign-in')
       })
-      .then((res) => setMessage({ img: success, text: 'Вы успешно зарегистрировались!' }))
-      .catch((res) => setMessage({ img: unSuccess, text: 'Что-то пошло не так! Попробуйте ещё раз.' }))
+      .then(() => setMessage({ img: success, text: 'Вы успешно зарегистрировались!' }))
+      .catch(() => setMessage({ img: unSuccess, text: 'Что-то пошло не так! Попробуйте ещё раз.' }))
       .finally(() => setIsInfoTooltipOpen(true))
   }
 
@@ -157,11 +157,11 @@ function App() {
             setLoggedIn(true)
             setEmail(res.email)
             history.push('/')
-          })
-          .catch((res) => {
-            setMessage({ img: unSuccess, text: res.message })
-            setIsInfoTooltipOpen(true)
-          })
+          })  
+        })
+      .catch(() => {
+        setMessage({ img: unSuccess, text: 'Что-то пошло не так! Попробуйте ещё раз.' })
+        setIsInfoTooltipOpen(true)
       })
   }
 
