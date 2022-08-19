@@ -99,8 +99,8 @@ class Api {
 }
 
 const getToken = () => {
-  return `Bearer ${localStorage.getItem('jwt')}`
-};
+  return `Bearer ${localStorage.getItem('jwt')}`;
+}
 
 const api = new Api({
   baseUrl: 'https://backend.mesto.nomoredomains.sbs',
