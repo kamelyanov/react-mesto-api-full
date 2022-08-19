@@ -37,8 +37,8 @@ function App() {
     if (loggedIn) {
       Promise.all([api.getUserInfo(), api.getInitialCards()])
         .then(([user, cards]) => {
-          setCards(cards)
           setCurrentUser(user)
+          setCards(cards.reverse())
         })
         .catch((err) => console.log(err));
       tokenCheck()
