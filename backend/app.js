@@ -9,7 +9,13 @@ const handleErrors = require('./errors/handleErrors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 require('dotenv').config();
 
-const { PORT = 3000, NODE_ENV, LOCALHOST = 'mongodb://localhost:27017/mestodb' } = process.env;
+const {
+  PORT = 3000,
+  NODE_ENV,
+  MONGODB_ADDRESS,
+  LOCALHOST = 'mongodb://localhost:27017/mestodb',
+} = process.env;
+
 const app = express();
 
 const limiter = rateLimit({
@@ -19,13 +25,16 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
+app.use(errorLogger);
+app.use(requestLogger);
+
 app.use(limiter);
 app.use(helmet());
 
 const allowedCors = [
   'https://mesto.kamelianov.nomoredomains.sbs',
   'http://mesto.kamelianov.nomoredomains.sbs',
-  'http://localhost:3000'
+  'http://localhost:3000',
 ];
 
 app.use((req, res, next) => {
@@ -33,22 +42,21 @@ app.use((req, res, next) => {
   const { method } = req;
   const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
   const requestHeaders = req.headers['access-control-request-headers'];
-
   if (allowedCors.includes(origin)) {
     res.header('Access-Control-Allow-Origin', origin);
+    return;
   }
   if (method === 'OPTIONS') {
     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
     res.header('Access-Control-Allow-Headers', requestHeaders);
-    return res.end();
+    res.end();
+    return;
   }
-
   next();
 });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(requestLogger);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -57,12 +65,12 @@ app.get('/crash-test', () => {
 });
 
 app.use(router);
-app.use(errorLogger);
+
 router.use(errors());
 app.use(handleErrors);
 
 async function main() {
-  await mongoose.connect((NODE_ENV === 'production' ? MONGODB_ADDRESS: LOCALHOST), {
+  await mongoose.connect((NODE_ENV === 'production' ? MONGODB_ADDRESS : LOCALHOST), {
     useNewUrlParser: true,
   });
   app.listen(PORT, () => {

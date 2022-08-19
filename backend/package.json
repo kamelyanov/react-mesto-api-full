@@ -28,7 +28,7 @@
     "url": "git+https://github.com/kamelyanov/express-mesto-gha.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Roman Kamelianov (https://github.com/kamelyanov)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/kamelyanov/express-mesto-gha/issues"

@@ -6,10 +6,6 @@ const cardRouter = require('./cards');
 const { login, createUser } = require('../controllers/users');
 const NotFoundError = require('../errors/not-found-err');
 
-router.get('/', (req, res) => {
-  res.send('Hello World');
-});
-
 router.post(
   '/signin',
   celebrate({
