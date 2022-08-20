@@ -25,10 +25,6 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-app.use(errorLogger);
-app.use(requestLogger);
-
-app.use(limiter);
 app.use(helmet());
 
 const allowedCors = [
@@ -62,9 +58,14 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
+app.use(requestLogger);
+
+app.use(limiter);
 app.use(router);
 
-router.use(errors());
+app.use(errorLogger);
+
+app.use(errors());
 app.use(handleErrors);
 
 async function main() {
