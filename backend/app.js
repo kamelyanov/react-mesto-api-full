@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -7,13 +8,10 @@ const helmet = require('helmet');
 const router = require('./routes');
 const handleErrors = require('./errors/handleErrors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-require('dotenv').config();
 
 const {
   PORT = 3000,
-  NODE_ENV,
   MONGODB_ADDRESS,
-  LOCALHOST = 'mongodb://localhost:27017/mestodb',
 } = process.env;
 
 const app = express();
@@ -69,13 +67,12 @@ app.use(errorLogger);
 app.use(errors());
 app.use(handleErrors);
 
-async function main() {
-  await mongoose.connect((NODE_ENV === 'production' ? MONGODB_ADDRESS : LOCALHOST), {
-    useNewUrlParser: true,
-  });
-  app.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}`);
-  });
-}
+mongoose.connect(MONGODB_ADDRESS, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
-main();
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}`);
+  console.log(process.env.JWT_SECRET);
+});
