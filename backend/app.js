@@ -74,5 +74,4 @@ mongoose.connect(MONGODB_ADDRESS, {
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
-  console.log(process.env.JWT_SECRET);
 });
