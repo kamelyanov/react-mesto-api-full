@@ -11,7 +11,9 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const {
   PORT = 3000,
+  NODE_ENV,
   MONGODB_ADDRESS,
+  LOCALHOST = 'mongodb://localhost:27017/mestodb',
 } = process.env;
 
 const app = express();
@@ -67,7 +69,7 @@ app.use(errorLogger);
 app.use(errors());
 app.use(handleErrors);
 
-mongoose.connect(MONGODB_ADDRESS, {
+mongoose.connect((NODE_ENV === 'production' ? MONGODB_ADDRESS : LOCALHOST), {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
